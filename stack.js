@@ -4,7 +4,6 @@ class Stack {
         this.head = null;
         this.tail = null;
     }
-	
 		// Кладёт элемент на стек.
 		// Возвращает новый размер стека.
     push(value) {
@@ -18,8 +17,7 @@ class Stack {
         }
         this.tail = node;
         return ++this.size;
-    }
-		
+    }	
 		// Убирает элемент со стека.
 		// Если стек пустой, кидает ошибку.
 		// Возвращает удалённый элемент.
@@ -39,7 +37,7 @@ class Stack {
         --this.size;
         return node;
     }
-		
+
 		// Возвращает верхний элемент стека без его удаления.
     peek() {
         return this.tail;
