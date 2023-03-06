@@ -245,7 +245,7 @@ function createNode(value) {
 }
 
 const list = new DoublyLinkedList();
-/* list.add(5);
+ list.add(5);
 list.add(3);
 list.add(-13);
 list.add(555,0);
@@ -261,7 +261,7 @@ list.removeByValue(3)
 console.log(list.toArray());
 console.log('********************************************');
 list.removeByIndex(2)
-console.log(list.toArray()); */
+console.log(list.toArray()); 
 
 
 list.add(3);
