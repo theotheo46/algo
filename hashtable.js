@@ -5,7 +5,7 @@ class HashTable {
       }
   
       this.size = size;
-      this.memory = new Array();
+      this.memory = new Array(size);
     }
       
       // Добавляет пару [key, value] в хеш-таблицу.
@@ -43,3 +43,9 @@ class HashTable {
   
     return total;
   }
+
+
+  const arr = new Array();
+  console.log(arr)
+  arr[22] = '22'
+  console.log(arr)
