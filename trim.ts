@@ -8,14 +8,11 @@ const arr = ['  foo  ', '  bar  '].map(value => trim(value)); // => ['foo', 'bar
 console.log(arr);
 
 
-function trim(s : string, p? : string) : string{
-    if (p === undefined) {
-        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-        return s.replace(rtrim,'');
+function trim(string: string, chars?: string): string {
+    if (string && !chars) {
+        return string.trim();
     }
-    else {
-        var rtrim = new RegExp('^['+ p + ']+|['+ p + ']+$', 'g');   
-        return s.replace(rtrim,'');
 
-    }
+    const reg = new RegExp(`[${chars}]`, "gi");
+    return string.replace(reg, "");
 }

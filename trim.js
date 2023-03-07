@@ -5,13 +5,10 @@ console.log(trim('\xA0foo', ' ')); // " foo"
 console.log(trim('-_-ab c -_-', '_-')); // ab c
 var arr = ['  foo  ', '  bar  '].map(function (value) { return trim(value); }); // => ['foo', 'bar']
 console.log(arr);
-function trim(s, p) {
-    if (p === undefined) {
-        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-        return s.replace(rtrim, '');
+function trim(string, chars) {
+    if (string && !chars) {
+        return string.trim();
     }
-    else {
-        var rtrim = new RegExp('^[' + p + ']+|[' + p + ']+$', 'g');
-        return s.replace(rtrim, '');
-    }
+    var reg = new RegExp("[".concat(chars, "]"), "gi");
+    return string.replace(reg, "");
 }
