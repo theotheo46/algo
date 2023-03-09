@@ -1,39 +1,31 @@
-function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
+function isString(x) {
+    return Object.prototype.toString.call(x) === "[object String]";
+}
+function isObject(x) {
+    return typeof x === 'object' && !Array.isArray(x) && x !== null;
 }
 function set(object, path, value) {
-    var arr = path.split('.');
-    if (isObject(object)) {
-        var result = object;
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] in result) {
-                result = result[arr[i]];
-            }
-            else {
-                result = defaultValue;
-                break;
-            }
-        }
+    if (!isObject(object)) {
+        throw new Error('Object is not object');
     }
-    else
-        return object;
+    if (!isString(path)) {
+        throw new Error('Path is not string');
+    }
+    var schema = object;
+    var decomposedPath = path.split('.');
+    var len = decomposedPath.length;
+    for (var i = 0; i < len - 1; i++) {
+        var elem = decomposedPath[i];
+        if (!schema[elem]) {
+            schema[elem] = {};
+        }
+        schema = schema[elem];
+    }
+    schema[decomposedPath[len - 1]] = value;
+    return object;
 }
+console.log(set({ foo: 5, bar: { baz: 1 } }, 'bar.baz', 10));
 /**
   * set({ foo: 5 }, 'bar.baz', 10); // { foo: 5, bar: { baz: 10 } }
   * set(3, 'foo.bar', 'baz'); // 3
 */
-function get(obj, path, defaultValue) {
-    var keys = path.split(".");
-    var go = function (acc, v) { return (acc === undefined) ? acc : acc[v]; };
-    var res = keys.reduce(go, obj);
-    return (res === undefined) ? defaultValue : res;
-}
-var obj = {
-    a: {
-        b: {
-            c: 'd'
-        },
-        e: 'f'
-    }
-};
-console.log(get(obj, 'a.b', '111'));

@@ -1,26 +1,38 @@
-function isObject(item: unknown) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
-}
+type Indexed<T = unknown> = {
+    [key in string]: T;
+  };
 
+function isString(x : string) {
+    return Object.prototype.toString.call(x) === "[object String]"
+  }
 
-
+  function isObject(x : unknown) {
+    return typeof x === 'object' && !Array.isArray(x) && x !== null;
+  }
 
 function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-    let arr = path.split('.');
-    if (isObject(object)) {
-        let result = object;
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i] in (result as Indexed)) {
-                result = result[arr[i]];
-            } else {
-                result = defaultValue;
-                break;
-            }
+    if (!isObject(object)) {
+        throw new Error('Object is not object');
+      }
+    if (!isString(path)) {
+        throw new Error('Path is not string');
+      }
+      let schema = object as Indexed;
+      const decomposedPath = path.split('.');
+
+      const len = decomposedPath.length;
+      for (let i = 0; i < len - 1; i++) {
+        const elem = decomposedPath[i];
+        if (!schema[elem]) {
+            schema[elem] = {};
         }
-    }
-    else return object;
+        schema = schema[elem] as Indexed;
+      }         
+      schema[decomposedPath[len - 1]] = value;
+    return object;
 }
 
+console.log(set({foo: 5, bar: {baz: 1}}, 'bar.baz', 10));
 
 /**
   * set({ foo: 5 }, 'bar.baz', 10); // { foo: 5, bar: { baz: 10 } }
