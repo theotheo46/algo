@@ -30,7 +30,12 @@ class HashTable {
     let memoryLocation = hash(key, this.size);
     console.log(memoryLocation);
     if (!this.memory[memoryLocation]) return null;
-    return this.memory[memoryLocation].find((x) => x[0] === key)[1];
+    for (let i = 0; i < this.memory[memoryLocation].length; i++) {
+      if (this.memory[memoryLocation][i][0] === key) {
+         return this.memory[memoryLocation][i][1];
+      }
+   }
+   return undefined;
   }
 	
 	// Удаляет значение из хеш-таблице по ключу.
@@ -77,4 +82,5 @@ console.log(ht.get('abcde'));
 ht.remove('abcde');
 console.log(ht);
 ht.remove('abcdee');
+ht.get('abcdee');
 console.log(ht);
