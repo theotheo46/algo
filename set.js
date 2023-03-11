@@ -1,3 +1,4 @@
+"use strict";
 function isString(x) {
     return Object.prototype.toString.call(x) === "[object String]";
 }
@@ -11,11 +12,11 @@ function set(object, path, value) {
     if (!isString(path)) {
         throw new Error('Path is not string');
     }
-    var schema = object;
-    var decomposedPath = path.split('.');
-    var len = decomposedPath.length;
-    for (var i = 0; i < len - 1; i++) {
-        var elem = decomposedPath[i];
+    let schema = object;
+    const decomposedPath = path.split('.');
+    const len = decomposedPath.length;
+    for (let i = 0; i < len - 1; i++) {
+        const elem = decomposedPath[i];
         if (!schema[elem]) {
             schema[elem] = {};
         }
