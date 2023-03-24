@@ -7,7 +7,6 @@ function allSentences(entries) {
     let bases   = entries.map(e => e.length).reverse();
     let total   = bases.reduce((acc, v) => acc * v);
     let s       = entries.length - 1;
-    let result  = [];
     let i = 0;
 
     return function() {
@@ -15,9 +14,10 @@ function allSentences(entries) {
         if (i < total) {
             retval = entries.reduce((r, v, i) => (`${r} ${v[counter[s - i]]}`), "");
             counter.some((e, ci) => (counter[ci] = (e + 1) % bases[ci]));
+            retval = retval.trim();
             }
         else {
-            retval = 'undefined';
+            retval = undefined;
         }
         i++;
         return retval;
@@ -27,7 +27,7 @@ function allSentences(entries) {
   const nextSentence = allSentences([
       ['внучка', 'внучок'],
       ['маша', 'махать', 'машу'],
-    //  ['крыса', 'крысу', 'крысой']
+      ['крыса', 'крысу', 'крысой']
   ]);
   
   console.log(nextSentence()); 
