@@ -1,14 +1,24 @@
-function buildPyramid(tiers) {
-    let arr = new Array(tiers).fill(' ');
-    arr[tiers - 1] = '*';
-    console.log(arr.join(''));
-    for (let i = 2; i <= tiers; i++) {
-        arr[arr.length] = '*';
-        arr[tiers - i] = '*';
-        console.log(arr.join(''));
+const TYPE_ERROR = 'Something wrong with type of input param';
+const tree = (n) => {
+    if ((typeof n !== "string") && (typeof n !== "number")) {
+        throw new TypeError(TYPE_ERROR);
     }
-    let arr1 = new Array(tiers).fill(' ');
-    arr1[tiers - 1] = '|';
-    console.log(arr1.join(''));
-}
-buildPyramid(8);
+    if (n < 3) {
+        return null;
+    }
+    let result = '';
+    let line = n;
+    while (line-- > 1) {
+        result = result.concat(Array(line).join(' ')).concat(Array((n - line) * 2).join('*')).concat(Array(line).join(' ')).concat('\n');
+    }
+    result = result.concat(Array(n - 1).join(' ')).concat(Array(2).join('|')).concat(Array(n - 1).join(' ')).concat('\n');
+    return result;
+};
+console.log(tree('5'));
+const expected = '   *   \n' +
+    '  ***  \n' +
+    ' ***** \n' +
+    '*******\n' +
+    '   |   \n';
+const s = tree(5);
+console.log(s?.localeCompare(expected));
